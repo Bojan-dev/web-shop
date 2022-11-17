@@ -1,0 +1,17 @@
+export const theme = {
+  primary: 'hsl(216,82%,54%)',
+  pLight: 'hsl(224, 100%, 96%)',
+  pDark: 'hsl(216,82%,44%)',
+  pDarker: 'hsl(216,82%,22%)',
+  pDisabled: 'hsl(234, 13%, 70%)',
+  secondary: 'hsl(8, 100%, 75%)',
+  sDark: 'hsl(8, 100%, 70%)',
+  sDarker: 'hsl(8, 100%, 63%)',
+  white: 'hsl(0, 0%, 100%)',
+  text: 'rgb(0,0,13)',
+  error: 'hsl(347, 72%, 55%)',
+  success: 'hsl(163, 67%, 45%)',
+  italic: 'hsl(0, 0%, 50%)',
+  iLight: 'hsl(0, 0%, 90%)',
+  disabled: 'hsl(229, 53%, 76%)',
+};

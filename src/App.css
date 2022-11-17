@@ -1,0 +1,85 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*::placeholder {
+  letter-spacing: 0.0125em;
+  color: #a4a4a4;
+}
+
+body {
+  font-family: Raleway, Montserrat;
+  color: #222222;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+  overflow-x: hidden;
+}
+
+h4 {
+  font-weight: 500;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+
+input,
+textarea {
+  border: none;
+  outline: none;
+  padding: 0.5em 1em;
+  font-family: Raleway, Montserrat;
+  font-size: 1rem;
+}
+
+button {
+  border: none;
+  letter-spacing: 0.025em;
+  cursor: pointer;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.loading {
+  font-weight: bold;
+  display: inline-block;
+  font-family: monospace;
+  font-size: 30px;
+  clip-path: inset(0 3ch 0 0);
+  animation: las 1s steps(4) infinite;
+}
+
+@keyframes las {
+  to {
+    clip-path: inset(0 -1ch 0 0);
+  }
+}
+
+select {
+  color: #222222;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 15px top 1em, right 10px top 1em;
+  background-size: 5px 5px, 5px 5px;
+  font-family: Raleway, Montserrat;
+  font-size: 1rem;
+}
