@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { devices } from '../../styles/breakpoints';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StyledContainer } from '../../styles/global';
@@ -16,6 +17,16 @@ export const TopBtmNavigation = styled(NavigationWrapper)`
   position: relative;
   background-color: ${({ theme }) => theme.pDarker};
   font-size: 0.925rem;
+
+  & a[href^='mailto'] {
+    display: none;
+  }
+
+  @media ${devices.mobileL} {
+    & a[href^='mailto'] {
+      display: initial;
+    }
+  }
 `;
 
 export const LinksWrapper = styled.div`
@@ -28,12 +39,21 @@ export const NavEl = styled.nav`
   display: flex;
   align-items: center;
   gap: 1em;
-  height: 5em;
+  height: 4em;
+
+  @media ${devices.tablet} {
+    height: 5em;
+  }
 `;
 
 export const NavForm = styled.form`
+  display: none;
   position: relative;
   width: 50%;
+
+  @media ${devices.mobileL} {
+    display: initial;
+  }
 `;
 
 export const NavInput = styled.input`
@@ -108,13 +128,17 @@ export const ProductBarBtn = styled.button`
   align-items: center;
   background-color: ${({ theme }) => theme.sDark};
   color: white;
+  padding: 0.5em 1.25em;
   font-size: 1rem;
-  padding: 0.5em 2.5em;
   justify-content: space-between;
   user-select: none;
 
   &:hover {
     background-color: ${({ theme }) => theme.sDarker};
+  }
+
+  @media ${devices.mobileL} {
+    padding: 0.5em 2.5em;
   }
 `;
 

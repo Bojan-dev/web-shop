@@ -4,4 +4,5 @@ export const v = {
   lgText: '1.5em',
 
   container: '80vw',
+  maxWidth: '',
 };

@@ -1,3 +1,4 @@
+import useSetDocTitle from '../hooks/useSetDocTitle';
 import { useNavigate } from 'react-router-dom';
 import { useAuthSignInWithEmailAndPassword } from '@react-query-firebase/auth';
 import { auth } from '../config/firebaseConfig';
@@ -16,6 +17,8 @@ import {
 } from '../components/signinup/styles';
 import { ErrorP } from '../styles/global';
 import googleIcon from '../imgs/google-plus-g.svg';
+import ActionOverlay from '../components/UI/ActionOverlay';
+import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 
 export enum ACTIONS {
   CHANGE = 'VALUE',
@@ -68,6 +71,7 @@ const inputReducer = (state: typeof initialState, action: InputActions) => {
 };
 
 const SignIn: React.FC = () => {
+  useSetDocTitle('Sign In');
   const navigate = useNavigate();
   const { isLoggedIn } = useGetCurrentUser();
   const [authError, setAuthError] = useState('');
@@ -98,35 +102,44 @@ const SignIn: React.FC = () => {
   if (isLoggedIn) return <LogoutFirst />;
 
   return (
-    <MainSign>
-      <h1>Sign in to your account</h1>
-      <SignInFormWrapper isError={mutation.isError} id="login-form">
-        <SignInForm
-          onFocus={() => mutation.reset()}
-          onSubmit={handleLogin.bind(this)}
-        >
-          <LoginInput
-            type="email"
-            state={emailState}
-            dispatch={emailDispatch}
-            id="email"
-          />
-          <LoginInput
-            type="password"
-            state={passState}
-            dispatch={passDispatch}
-          />
-          {mutation.isError && <ErrorP>{authError}</ErrorP>}
-          <SignInButton type="submit">Login</SignInButton>
-          <SignInButton google={true} onClick={handleLoginGoogle.bind(this)}>
-            <GoogleIcon src={googleIcon} alt="Google icon" />
-            Login - Google
-          </SignInButton>
-        </SignInForm>
-        <p>You don't have an acoount?</p>
-        <LinkTag to="/sign-up">Register</LinkTag>
-      </SignInFormWrapper>
-    </MainSign>
+    <>
+      {mutation.isLoading && (
+        <ActionOverlay
+          heading="Logging in"
+          paragraph="Please wait"
+          icon={faRightToBracket}
+        />
+      )}
+      <MainSign>
+        <h1>Sign in to your account</h1>
+        <SignInFormWrapper isError={mutation.isError} id="login-form">
+          <SignInForm
+            onFocus={() => mutation.reset()}
+            onSubmit={handleLogin.bind(this)}
+          >
+            <LoginInput
+              type="email"
+              state={emailState}
+              dispatch={emailDispatch}
+              id="email"
+            />
+            <LoginInput
+              type="password"
+              state={passState}
+              dispatch={passDispatch}
+            />
+            {mutation.isError && <ErrorP>{authError}</ErrorP>}
+            <SignInButton type="submit">Login</SignInButton>
+            <SignInButton google={true} onClick={handleLoginGoogle.bind(this)}>
+              <GoogleIcon src={googleIcon} alt="Google icon" />
+              Login - Google
+            </SignInButton>
+          </SignInForm>
+          <p>You don't have an acoount?</p>
+          <LinkTag to="/sign-up">Register</LinkTag>
+        </SignInFormWrapper>
+      </MainSign>
+    </>
   );
 };
 

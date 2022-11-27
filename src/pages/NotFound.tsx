@@ -1,3 +1,4 @@
+import useSetDocTitle from '../hooks/useSetDocTitle';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { devices } from '../styles/breakpoints';
@@ -36,6 +37,8 @@ const LinkBack = styled(Link)`
 `;
 
 const NotFound = () => {
+  useSetDocTitle('Not Found');
+
   return (
     <NotFoundWrapper>
       <h1>The page you requested does not exist.</h1>

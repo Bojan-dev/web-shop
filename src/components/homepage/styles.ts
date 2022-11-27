@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styled from 'styled-components';
-import hero_1 from '../../imgs/hero_1.jpg';
-import hero_2 from '../../imgs/hero_2.jpg';
-import hero_3 from '../../imgs/hero_3.jpg';
+import styled, { css } from 'styled-components';
+import { devices } from '../../styles/breakpoints';
 
-type PageProp = {
-  readonly currPage: number;
+type NumOfImgsProp = {
+  readonly imgsNum: number;
+  readonly transition: string;
+};
+
+type ImgProp = {
+  readonly imgUrl: string;
 };
 
 type PagePickerProps = {
@@ -13,40 +16,102 @@ type PagePickerProps = {
   readonly currpage: number;
 };
 
-export const SliderMain = styled.main<PageProp>`
+export const SliderMain = styled.main`
   position: relative;
-  min-height: calc(100vw * 900 / 2200);
-  background: url(${hero_3});
-  background-size: cover;
-  background-repeat: no-repeat;
+  height: calc(100vw * 1000 / 2200);
+  width: 100vw;
+  transform: translateX(-5vw);
+  max-height: 35em;
+  overflow: hidden;
+  margin-top: -1.5em;
+
+  &:hover {
+    svg {
+      display: block;
+    }
+  }
+
+  @media ${devices.tablet} {
+    margin-top: 0;
+    width: initial;
+    transform: translateX(0);
+    height: calc(100vw * 800 / 2200);
+  }
 `;
 
-export const SliderArrowsWrapper = styled.div`
+export const SliderMainImgsWrapper = styled.div<NumOfImgsProp>`
   position: absolute;
-  width: 100%;
-  color: white;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0.5em;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 2em;
+  flex-direction: row;
+  height: 100%;
+  width: calc(${({ imgsNum }) => imgsNum} * 100%);
+  background-color: ${({ theme }) => theme.primary};
+  transition: ${({ transition }) => transition};
+`;
 
-  & > * {
-    cursor: pointer;
+export const SliderImg = styled.div<ImgProp>`
+  position: relative;
+  width: 100%;
+  background: url(${({ imgUrl }) => imgUrl});
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+`;
+
+const Arrow = css`
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  top: 50%;
+  font-size: 1.5em;
+  transform: translateY(-50%);
+  color: white;
+  transition: 0.35s transform ease-in-out;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  @media ${devices.mobileL} {
+    font-size: 2.25em;
+  }
+`;
+
+export const SliderArrowLeft = styled(FontAwesomeIcon)`
+  ${Arrow}
+  left: 0;
+  margin-left: 0.25em;
+
+  @media ${devices.tablet} {
+    margin-left: 0.5em;
+  }
+`;
+
+export const SliderArrowRight = styled(FontAwesomeIcon)`
+  ${Arrow}
+  right: 0;
+  margin-right: 0.25em;
+
+  @media ${devices.tablet} {
+    margin-right: 0.5em;
   }
 `;
 
 export const SliderPagePickerWrapper = styled.div`
+  display: flex;
+  z-index: 3;
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, -100%);
-  display: flex;
+  transform: translate(-50%, -75%);
   gap: 0.75em;
   color: white;
-  font-size: 0.75em;
+  font-size: 0.5em;
+
+  @media ${devices.tablet} {
+    font-size: 0.825em;
+    transform: translate(-50%, -100%);
+  }
 `;
 
 export const SliderPagePicker = styled(FontAwesomeIcon)<PagePickerProps>`

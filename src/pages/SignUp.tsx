@@ -1,3 +1,4 @@
+import useSetDocTitle from '../hooks/useSetDocTitle';
 import { auth } from '../config/firebaseConfig';
 import { useAuthCreateUserWithEmailAndPassword } from '@react-query-firebase/auth';
 import { useGetCurrentUser } from '../store/login-ctx';
@@ -30,6 +31,7 @@ type FormValues = {
 };
 
 const Register = () => {
+  useSetDocTitle('Sign Up');
   const navigate = useNavigate();
   const { isLoggedIn } = useGetCurrentUser();
   const passRef = useRef<null | HTMLInputElement>(null);

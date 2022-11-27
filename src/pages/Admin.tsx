@@ -1,13 +1,14 @@
+import useSetDocTitle from '../hooks/useSetDocTitle';
 import NotFound from './NotFound';
-import {
-  LinksWrapper,
-  AdminNavLink,
-  AdminFormsWrapper,
-} from '../components/admin/styles';
+import { LinksWrapper, AdminFormsWrapper } from '../components/admin/styles';
+import AdminPageBtn from '../components/admin/AdminPageBtn';
 import { Outlet } from 'react-router-dom';
 import { useGetCurrentUser } from '../store/login-ctx';
 
+const pages = ['new-product', 'products-type', 'products-group', 'promotion'];
+
 const Admin = () => {
+  useSetDocTitle('Admin');
   const { isAdmin } = useGetCurrentUser();
 
   if (!isAdmin) return <NotFound />;
@@ -15,30 +16,9 @@ const Admin = () => {
   return (
     <>
       <LinksWrapper>
-        <AdminNavLink
-          className={({ isActive }) => (isActive ? 'active' : '')}
-          to="new-product"
-        >
-          Add New Product
-        </AdminNavLink>
-        <AdminNavLink
-          className={({ isActive }) => (isActive ? 'active' : '')}
-          to="add-type"
-        >
-          Add Products Type
-        </AdminNavLink>
-        <AdminNavLink
-          className={({ isActive }) => (isActive ? 'active' : '')}
-          to="add-group"
-        >
-          Add Products Group
-        </AdminNavLink>
-        <AdminNavLink
-          className={({ isActive }) => (isActive ? 'active' : '')}
-          to="add-promotion"
-        >
-          Add Promotion
-        </AdminNavLink>
+        {pages.map((btn) => (
+          <AdminPageBtn btn={btn} />
+        ))}
       </LinksWrapper>
       <AdminFormsWrapper>
         <Outlet />

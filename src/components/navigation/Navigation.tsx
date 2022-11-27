@@ -101,6 +101,7 @@ const Navigation = () => {
       </NavigationWrapper>
       <TopBtmNavigation>
         <ProductsHambar />
+        <FontAwesomeIcon icon={faSearch} color="white" />
       </TopBtmNavigation>
     </>
   );

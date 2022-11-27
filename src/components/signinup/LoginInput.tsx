@@ -26,6 +26,7 @@ const LoginInput: React.FC<Props> = ({ type, state, dispatch, id }) => {
   return (
     <SignInInputWrapper>
       <SignInInput
+        required
         onChange={(e) => {
           dispatch({ type: ACTIONS.CHANGE, payload: e.target.value });
           if (type === 'email') {

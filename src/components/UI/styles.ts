@@ -62,7 +62,13 @@ from{
 }
 `;
 
+export const SpinnerWrapper = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+
 export const SpinnerIcon = styled(FontAwesomeIcon)`
+  text-align: center;
   animation: ${spinAnim} 2s infinite;
   color: ${({ theme }) => theme.text};
   font-size: 2rem;

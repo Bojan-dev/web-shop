@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { StyledInput } from '../../styles/global';
+import { devices } from '../../styles/breakpoints';
 
 interface ButtonProps {
   readonly google?: boolean;
@@ -78,7 +79,7 @@ export const EyeIcon = styled(FontAwesomeIcon)`
 export const SignInButton = styled.button<ButtonProps>`
   background-color: ${({ theme, google }) =>
     google ? theme.secondary : theme.primary};
-  width: 75%;
+  width: 100%;
   color: white;
   padding: 0.75em 0;
   font-weight: 500;
@@ -97,6 +98,10 @@ export const SignInButton = styled.button<ButtonProps>`
   :disabled {
     background-color: ${({ theme }) => theme.pDisabled};
   }
+
+  @media ${devices.tablet} {
+    width: 75%;
+  }
 `;
 
 export const GoogleIcon = styled.img`
@@ -109,7 +114,7 @@ export const LinkTag = styled(Link)`
   border-radius: 5px;
   color: ${({ theme }) => theme.secondary};
   font-weight: 500;
-  width: 50%;
+  width: 75%;
   font-size: 1.125rem;
   display: inline-block;
   padding: 0.5em 0;
@@ -117,5 +122,9 @@ export const LinkTag = styled(Link)`
 
   :hover {
     outline-width: 2px;
+  }
+
+  @media ${devices.tablet} {
+    width: 50%;
   }
 `;
