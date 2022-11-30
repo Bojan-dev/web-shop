@@ -4,6 +4,10 @@ import { devices } from '../../styles/breakpoints';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StyledContainer } from '../../styles/global';
 
+type ProductsMenuProps = {
+  isMenuVisible: boolean;
+};
+
 const NavWrappers = css`
   background-color: ${({ theme }) => theme.primary};
   display: flex;
@@ -124,24 +128,37 @@ export const ProductBarBtn = styled.button`
   }
 `;
 
-export const ProductsMenu = styled.div`
+export const ProductsMenu = styled.div<ProductsMenuProps>`
   position: fixed;
   color: ${({ theme }) => theme.text};
   top: 0;
   left: 0;
   font-size: 1rem;
   padding-top: 1em;
+  width: ${({ isMenuVisible }) => (isMenuVisible ? '15em' : '0')};
+  max-width: fit-content;
   height: 100vh;
   z-index: 100;
   background-color: white;
   user-select: none;
+  transition: width 0.35s ease-in;
+`;
+
+export const MenuProdTypeList = styled.ul<ProductsMenuProps>`
+  opacity: ${({ isMenuVisible }) => (isMenuVisible ? '1' : '0')};
+  visibility: ${({ isMenuVisible }) => (isMenuVisible ? 'visible' : 'hidden')};
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  transition: opacity 0.25s;
+  transition-delay: ${({ isMenuVisible }) => (isMenuVisible ? '0.35s' : '0')};
 `;
 
 export const MenuProdType = styled.li<{ isActive: boolean }>`
   display: flex;
   align-items: center;
   padding: 0.5em 6em 0.5em 1.5em;
-  margin: 0.5em 0;
   text-transform: capitalize;
   cursor: pointer;
   border-left: 5px solid

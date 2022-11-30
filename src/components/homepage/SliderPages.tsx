@@ -174,7 +174,7 @@ function useSlider(promotions: ExtendedPromotionProps[]) {
 
     const timer = setInterval(() => {
       setCurrPage((prevPage) => prevPage + 1);
-    }, 1 * 1000);
+    }, 5 * 1000);
 
     return () => {
       clearInterval(timer);
@@ -182,6 +182,8 @@ function useSlider(promotions: ExtendedPromotionProps[]) {
   }, [currPage, promotions, isDragActive, visibilityChange]);
 
   useEffect(() => {
+    transitionRef.current = 'none';
+
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'hidden') setVisibilityChange(true);
       if (document.visibilityState === 'visible') setVisibilityChange(false);

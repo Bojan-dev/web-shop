@@ -28,7 +28,10 @@ const ProductsHambar = () => {
 
   if (productsQuery.isSuccess)
     typesCtx = (
-      <ProductsHambarTypeList productTypes={productsQuery.data.docs} />
+      <ProductsHambarTypeList
+        productTypes={productsQuery.data.docs}
+        isMenuVisible={isProductMenuOpen}
+      />
     );
 
   if (productsQuery.isError) typesCtx = <p>{productsQuery.error.message}</p>;
@@ -39,17 +42,13 @@ const ProductsHambar = () => {
         <FontAwesomeIcon icon={faBarsStaggered} /> Products
       </ProductBarBtn>
 
-      {isProductMenuOpen && (
-        <>
-          <Overlay onClick={closeMenu} />
-          <ProductsMenu>
-            {typesCtx}
-            <CloseMenuBtn onClick={closeMenu}>
-              <CloseMenuIcon icon={faClose} />
-            </CloseMenuBtn>
-          </ProductsMenu>
-        </>
-      )}
+      {isProductMenuOpen && <Overlay onClick={closeMenu} />}
+      <ProductsMenu isMenuVisible={isProductMenuOpen}>
+        {typesCtx}
+        <CloseMenuBtn onClick={closeMenu}>
+          <CloseMenuIcon icon={faClose} />
+        </CloseMenuBtn>
+      </ProductsMenu>
     </>
   );
 };

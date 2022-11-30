@@ -1,15 +1,23 @@
-import { useState } from 'react';
-import { MenuProdType, MenuProdTypeArrow } from './styles';
+import { useState, useEffect } from 'react';
+import { MenuProdTypeList, MenuProdType, MenuProdTypeArrow } from './styles';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
 import ProductTypeHoverMenu from './ProductTypeHoverMenu';
 
 type Props = {
   productTypes: QueryDocumentSnapshot<DocumentData>[];
+  isMenuVisible: boolean;
 };
 
-const ProductsHambarTypeList: React.FC<Props> = ({ productTypes }) => {
+const ProductsHambarTypeList: React.FC<Props> = ({
+  productTypes,
+  isMenuVisible,
+}) => {
   const [selectedType, setSelectedType] = useState('');
+
+  useEffect(() => {
+    setSelectedType('');
+  }, [isMenuVisible]);
 
   const onTypeHover = (typeId: string) => {
     setSelectedType((prevType) => {
@@ -20,7 +28,7 @@ const ProductsHambarTypeList: React.FC<Props> = ({ productTypes }) => {
   };
 
   return (
-    <>
+    <MenuProdTypeList isMenuVisible={isMenuVisible}>
       {productTypes.map((type) => {
         const isTypeActive = type.id === selectedType;
 
@@ -36,7 +44,7 @@ const ProductsHambarTypeList: React.FC<Props> = ({ productTypes }) => {
         );
       })}
       {selectedType && <ProductTypeHoverMenu selectedType={selectedType} />}
-    </>
+    </MenuProdTypeList>
   );
 };
 
