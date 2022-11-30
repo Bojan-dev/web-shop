@@ -9,7 +9,7 @@ import {
   NavEl,
   NavForm,
   CartWrapper,
-  NavButton,
+  NavSearchIconWrapper,
   NavInput,
   CartItems,
   SignOutBtn,
@@ -80,9 +80,9 @@ const Navigation = () => {
         </NavLink>
         <NavForm>
           <NavInput type="text" placeholder="Search" />
-          <NavButton>
+          <NavSearchIconWrapper>
             <FontAwesomeIcon icon={faSearch} color="white" />
-          </NavButton>
+          </NavSearchIconWrapper>
         </NavForm>
         <NavEl>
           <NavLink
@@ -101,7 +101,10 @@ const Navigation = () => {
       </NavigationWrapper>
       <TopBtmNavigation>
         <ProductsHambar />
-        <FontAwesomeIcon icon={faSearch} color="white" />
+        <CartWrapper>
+          <FontAwesomeIcon icon={faShoppingCart} />
+          <CartItems>0</CartItems>
+        </CartWrapper>
       </TopBtmNavigation>
     </>
   );

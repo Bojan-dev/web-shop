@@ -1,11 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { devices } from '../../styles/breakpoints';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { StyledContainer } from '../../styles/global';
 
-export const NavigationWrapper = styled.div`
-  ${StyledContainer}
+const NavWrappers = css`
   background-color: ${({ theme }) => theme.primary};
   display: flex;
   justify-content: space-between;
@@ -13,20 +12,10 @@ export const NavigationWrapper = styled.div`
   color: white;
 `;
 
-export const TopBtmNavigation = styled(NavigationWrapper)`
-  position: relative;
-  background-color: ${({ theme }) => theme.pDarker};
-  font-size: 0.925rem;
-
-  & a[href^='mailto'] {
-    display: none;
-  }
-
-  @media ${devices.mobileL} {
-    & a[href^='mailto'] {
-      display: initial;
-    }
-  }
+export const NavigationWrapper = styled.div`
+  ${StyledContainer}
+  ${NavWrappers}
+  height: 5em;
 `;
 
 export const LinksWrapper = styled.div`
@@ -36,23 +25,22 @@ export const LinksWrapper = styled.div`
 `;
 
 export const NavEl = styled.nav`
-  display: flex;
+  display: none;
   align-items: center;
   gap: 1em;
-  height: 4em;
 
   @media ${devices.tablet} {
-    height: 5em;
+    display: flex;
   }
 `;
 
 export const NavForm = styled.form`
-  display: none;
   position: relative;
-  width: 50%;
+  width: 70%;
+  max-width: 60em;
 
-  @media ${devices.mobileL} {
-    display: initial;
+  @media ${devices.tablet} {
+    width: 50%;
   }
 `;
 
@@ -62,25 +50,19 @@ export const NavInput = styled.input`
   transition: 0.5s all;
 
   :focus {
-    transform: scaleX(110%) scaleY(120%);
+    transform: scaleX(1.05) scaleY(1.1);
   }
 `;
 
-export const NavButton = styled.button`
-  height: 100%;
-  top: 0;
-  right: 0;
+export const NavSearchIconWrapper = styled.button`
   position: absolute;
-  background-color: white;
-  padding: 0 1em;
+  height: 100%;
+  transform: translateX(-100%);
   background-color: ${({ theme }) => theme.secondary};
+  aspect-ratio: 1/1;
 
   :hover {
     background-color: ${({ theme }) => theme.sDark};
-
-    svg {
-      transform: scale(1.1);
-    }
   }
 `;
 
@@ -233,6 +215,34 @@ export const BrandsMenu = styled.ul`
     &:hover::before {
       transform-origin: left;
       transform: scaleX(1);
+    }
+  }
+`;
+
+export const TopBtmNavigation = styled.div`
+  ${StyledContainer}
+  ${NavWrappers}
+  position: relative;
+  background-color: ${({ theme }) => theme.pDarker};
+  font-size: 0.925rem;
+
+  ${CartWrapper} {
+    display: initial;
+  }
+
+  & a[href^='mailto'] {
+    display: none;
+  }
+
+  @media ${devices.mobileL} {
+    & a[href^='mailto'] {
+      display: initial;
+    }
+  }
+
+  @media ${devices.tablet} {
+    ${CartWrapper} {
+      display: none;
     }
   }
 `;

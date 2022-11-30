@@ -20,6 +20,70 @@ const SliderPages: React.FC<{ promotions: ExtendedPromotionProps[] }> = ({
   promotions,
 }) => {
   const navigate = useNavigate();
+  const {
+    currPage,
+    setCurrPage,
+    transitionRef,
+    nextPromotion,
+    previousPromotion,
+    onTransitionEnd,
+    handleDragStart,
+    handleDragMove,
+    handleDragEnd,
+  } = useSlider(promotions);
+
+  return (
+    <SliderMain
+      onDragStart={(e) => handleDragStart(e)}
+      onDragOver={(e) => handleDragMove(e)}
+      onDragEnd={() => handleDragEnd()}
+      onTouchStart={(e) => handleDragStart(e)}
+      onTouchMove={(e) => handleDragMove(e)}
+      onTouchEnd={() => handleDragEnd()}
+      draggable="true"
+    >
+      <SliderMainImgsWrapper
+        imgsNum={promotions.length}
+        transition={transitionRef.current}
+        onTransitionEnd={() => onTransitionEnd()}
+        style={{
+          transform: `translateX(calc(-100%/${promotions.length}*${currPage}))`,
+        }}
+      >
+        {promotions.map((promotion, i) => (
+          <SliderImg
+            onMouseDown={(e) => {
+              if (e.stopPropagation) e.stopPropagation();
+            }}
+            key={i}
+            imgUrl={promotion.imgUrl}
+            onClick={() => {
+              navigate(promotion.url);
+            }}
+          />
+        ))}
+      </SliderMainImgsWrapper>
+      <SliderArrowLeft icon={faChevronLeft} onClick={previousPromotion} />
+      <SliderArrowRight icon={faChevronRight} onClick={nextPromotion} />
+      <SliderPagePickerWrapper>
+        {promotions.map(
+          (promotion, i) =>
+            !promotion?.clone && (
+              <SliderPagePicker
+                key={i}
+                icon={faCircle}
+                pagenumber={i}
+                currpage={currPage}
+                onClick={() => setCurrPage(i)}
+              />
+            )
+        )}
+      </SliderPagePickerWrapper>
+    </SliderMain>
+  );
+};
+
+function useSlider(promotions: ExtendedPromotionProps[]) {
   const [currPage, setCurrPage] = useState(1);
   const [isAnimRunning, setIsAnimRunning] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
@@ -59,11 +123,12 @@ const SliderPages: React.FC<{ promotions: ExtendedPromotionProps[] }> = ({
   const handleDragStart = (e: React.DragEvent | React.TouchEvent) => {
     if ('clientX' in e) {
       dragStartRef.current = e.clientX;
+      e.dataTransfer.setDragImage(dragImageRef.current, 0, 0);
+      e.dataTransfer.effectAllowed = 'none';
     }
 
-    if ('changedTouches' in e) {
+    if ('changedTouches' in e)
       dragStartRef.current = e?.changedTouches[0].clientX;
-    }
 
     dragStartPageValueRef.current = currPage;
 
@@ -109,7 +174,7 @@ const SliderPages: React.FC<{ promotions: ExtendedPromotionProps[] }> = ({
 
     const timer = setInterval(() => {
       setCurrPage((prevPage) => prevPage + 1);
-    }, 10 * 1000);
+    }, 1 * 1000);
 
     return () => {
       clearInterval(timer);
@@ -123,55 +188,18 @@ const SliderPages: React.FC<{ promotions: ExtendedPromotionProps[] }> = ({
     });
   }, []);
 
-  return (
-    <SliderMain
-      onDragStart={(e) => handleDragStart(e)}
-      onDrag={(e) => handleDragMove(e)}
-      onDragEnd={() => handleDragEnd()}
-      onTouchStart={(e) => handleDragStart(e)}
-      onTouchMove={(e) => handleDragMove(e)}
-      onTouchEnd={() => handleDragEnd()}
-    >
-      <SliderMainImgsWrapper
-        imgsNum={promotions.length}
-        transition={transitionRef.current}
-        onTransitionEnd={() => onTransitionEnd()}
-        style={{
-          transform: `translateX(calc(-100%/${promotions.length}*${currPage}))`,
-        }}
-      >
-        {promotions.map((promotion, i) => (
-          <SliderImg
-            draggable="true"
-            onDragStart={(e) => {
-              e.dataTransfer.setDragImage(dragImageRef.current, 0, 0);
-            }}
-            key={i}
-            imgUrl={promotion.imgUrl}
-            onClick={() => {
-              navigate(promotion.url);
-            }}
-          />
-        ))}
-      </SliderMainImgsWrapper>
-      <SliderArrowLeft icon={faChevronLeft} onClick={previousPromotion} />
-      <SliderArrowRight icon={faChevronRight} onClick={nextPromotion} />
-      <SliderPagePickerWrapper>
-        {promotions.map(
-          (promotion, i) =>
-            !promotion?.clone && (
-              <SliderPagePicker
-                key={i}
-                icon={faCircle}
-                pagenumber={i}
-                currpage={currPage}
-                onClick={() => setCurrPage(i)}
-              />
-            )
-        )}
-      </SliderPagePickerWrapper>
-    </SliderMain>
-  );
-};
+  return {
+    currPage,
+    setCurrPage,
+    transitionRef,
+    dragImageRef,
+    nextPromotion,
+    previousPromotion,
+    onTransitionEnd,
+    handleDragStart,
+    handleDragMove,
+    handleDragEnd,
+  };
+}
 
 export default SliderPages;
