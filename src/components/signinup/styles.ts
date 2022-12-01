@@ -25,7 +25,7 @@ export const MainSign = styled.main`
 
 export const SignInFormWrapper = styled.div<FormWrapperProps>`
   margin-top: 2em;
-  padding: 3em 10%;
+  padding: 3em 7.5%;
   width: 100%;
   max-width: 40em;
   border: 1px solid
@@ -71,7 +71,7 @@ export const SignInInputWrapper = styled.div`
 export const EyeIcon = styled(FontAwesomeIcon)`
   position: absolute;
   right: 0;
-  transform: translate(-100%, 80%);
+  transform: translate(-100%, 100%);
   cursor: pointer;
   color: ${({ theme }) => theme.text};
 `;

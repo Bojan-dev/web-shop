@@ -63,7 +63,7 @@ const AddProductType = () => {
     if (data.spec) {
       const existingSpecsArr: [string, string][] = [];
 
-      Object.entries(data.spec).forEach((spec) => {
+      Object.entries(data.spec).forEach((spec): void => {
         const doesSpecExist = state.includes(spec[0].split('_')[0]);
 
         if (doesSpecExist) {
@@ -71,7 +71,7 @@ const AddProductType = () => {
         }
       });
 
-      existingSpecsArr.forEach((spec) => {
+      existingSpecsArr.forEach((spec): void => {
         const specId = spec[0].split('_');
 
         if (specId[1] === 'chars') return;

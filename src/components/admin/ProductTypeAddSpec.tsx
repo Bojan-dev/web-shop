@@ -23,6 +23,8 @@ const ProductTypeAddSpec: React.FC<AddSpecProps> = ({
     dispatch({ type: 'DELETE_SPEC', payload: id });
   };
 
+  console.log('sad');
+
   return (
     <AddSpecWrapper>
       <DeleteSpec onClick={deleteSpecInputs}>x</DeleteSpec>

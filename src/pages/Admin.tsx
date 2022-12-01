@@ -17,7 +17,7 @@ const Admin = () => {
     <>
       <LinksWrapper>
         {pages.map((btn) => (
-          <AdminPageBtn btn={btn} />
+          <AdminPageBtn key={btn} btn={btn} />
         ))}
       </LinksWrapper>
       <AdminFormsWrapper>

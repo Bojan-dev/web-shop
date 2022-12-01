@@ -52,9 +52,6 @@ const SliderPages: React.FC<{ promotions: ExtendedPromotionProps[] }> = ({
       >
         {promotions.map((promotion, i) => (
           <SliderImg
-            onMouseDown={(e) => {
-              if (e.stopPropagation) e.stopPropagation();
-            }}
             key={i}
             imgUrl={promotion.imgUrl}
             onClick={() => {
@@ -174,7 +171,7 @@ function useSlider(promotions: ExtendedPromotionProps[]) {
 
     const timer = setInterval(() => {
       setCurrPage((prevPage) => prevPage + 1);
-    }, 5 * 1000);
+    }, 10 * 1000);
 
     return () => {
       clearInterval(timer);

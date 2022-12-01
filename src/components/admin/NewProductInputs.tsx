@@ -25,6 +25,8 @@ const NewProductInputs: React.FC<InputTypes> = ({
   errors,
 }) => {
   const { spec, ...rest } = schema;
+  console.time('start');
+
   const baseFields = Object.entries(rest).sort((a, b) =>
     b[0].localeCompare(a[0])
   );
@@ -35,8 +37,8 @@ const NewProductInputs: React.FC<InputTypes> = ({
 
     const isError = errors[fieldName] ? true : false;
 
-    const inputType =
-      value[1] <= 100 ? (
+    if (value[1] <= 100) {
+      const inputType =
         fieldName === 'price' ? (
           <AdminInput
             placeholder={placeholderCreator(fieldName)}
@@ -57,20 +59,21 @@ const NewProductInputs: React.FC<InputTypes> = ({
             key={fieldName}
             isError={isError}
           />
-        )
-      ) : (
-        <AdminTextarea
-          placeholder={placeholderCreator(fieldName)}
-          {...register(fieldName, {
-            required: true,
-          })}
-          key={fieldName}
-          rows={4}
-          isError={isError}
-        />
-      );
+        );
 
-    return inputType;
+      return inputType;
+    }
+    return (
+      <AdminTextarea
+        placeholder={placeholderCreator(fieldName)}
+        {...register(fieldName, {
+          required: true,
+        })}
+        key={fieldName}
+        rows={4}
+        isError={isError}
+      />
+    );
   });
 
   const specInputs = specFields.map((value) => {
@@ -89,6 +92,8 @@ const NewProductInputs: React.FC<InputTypes> = ({
       />
     );
   });
+
+  console.timeEnd('start');
 
   return (
     <>
